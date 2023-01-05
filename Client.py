@@ -17,13 +17,32 @@ class HTTPRequest:
         self.version = "HTTP/1.1"
         self.host = "127.0.0.1"
         self.user_agent = ""
+        self.connection = ""
+        self.content_type = ""
+        self.body = ""
     
 
     def build_request(self):
-        msg = self.method + " / " + self.url + " / " + self.version + "\r\nHost: " + self.host + "\r\n"
+        # 요청 라인 빌드
+        msg = self.method + " " + self.url + " " + self.version + "\r\nHost: " + self.host + "\r\n"
         
+        # 헤더 라인 빌드
+        if self.connection:
+            msg += "Connection: " + self.connection + "\r\n"
+
+        if self.content_type:
+            msg += "Content-Type: " + self.content_type + "\r\n"
+
         if self.user_agent:
             msg += "User-agent: " + self.user_agent + "\r\n"
+
+        # 공백 라인
+        msg += "\r\n"
+
+        # 개체 몸체 빌드
+        if self.method != "HEAD":
+            msg += "{" + self.body + "}"
+        
         
         return msg
 
@@ -34,6 +53,9 @@ def request_user_info(http_version):
     request.version = http_version
     request.host = "127.0.0.1"
     request.user_agent = "GameClient/1.0"
+    request.connection = "keep-alive"
+    request.content_type = "application/json"
+
 
     return request.build_request()
 
@@ -44,6 +66,8 @@ def request_item_a_info():
     request.version = "HTTP/1.1"
     request.host = "127.0.0.1"
     request.user_agent = "GameClient/1.0"
+    request.connection = "keep-alive"
+    request.content_type = "application/json"
 
     return request.build_request()
 
@@ -54,6 +78,10 @@ def buy_item_b():
     request.version = "HTTP/1.1"
     request.host = "127.0.0.1"
     request.user_agent = "GameClient/1.0"
+    request.connection = "keep-alive"
+    request.content_type = "application/json"
+
+    request.body = '"item": 1'
 
     return request.build_request()
 
@@ -64,6 +92,8 @@ def get_server_status():
     request.version = "HTTP/1.1"
     request.host = "127.0.0.1"
     request.user_agent = "GameClient/1.0"
+    request.connection = "keep-alive"
+    request.content_type = "application/json"
 
     return request.build_request()
 
@@ -74,6 +104,8 @@ def add_money():
     request.version = "HTTP/1.1"
     request.host = "127.0.0.1"
     request.user_agent = "GameClient/1.0"
+    request.connection = "keep-alive"
+    request.content_type = "application/json"
 
     return request.build_request()
 
