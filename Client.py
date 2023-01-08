@@ -240,6 +240,10 @@ def run_client():
             msg = select_command(command)
             
         if msg: # 요청 메시지가 생성이 되었다면
+            print()
+            print("======================== Request to server ========================")
+            print(msg) # 서버로 보낼 요청 표시
+
             clientSocket.send(msg.encode()) # 서버에 전송
             response = clientSocket.recv(1024).decode() # 전송에 따른 응답 메시지를 response에 저장
             print()

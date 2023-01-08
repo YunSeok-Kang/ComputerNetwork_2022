@@ -155,7 +155,6 @@ class HTTPResponse:
         elif method_type == "HEAD":
             if request_target == 'gameserver/status':
                 self.make_status_line('200', http_version, 'OK')
-                self.body = '{"server_info:"Game server version 1.0"}'
         elif method_type == "PUT":
             if request_target == 'gameserver/userinfo/inventory/add':
                 self.make_status_line('200', http_version, 'OK')
